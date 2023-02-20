@@ -27,7 +27,7 @@ def normalizeBoxCoords(box, width, height):
     
     return (norm_x,norm_y,norm_w,norm_h)
 
-#scrapeLabels() - Parses either Pascal or YOLO annotations 
+#scrapeLabels() - Parses either Pascal 
 # Input:
 #   folderPath - Path to folder containing labeled data 
 # Output:
@@ -70,6 +70,7 @@ def scrapeLabels(folderPath):
             
             box_dict[fileName] = bboxes
         
+        ## doesn't work right now 
         #If label is in YOLO format
         # elif (fileType == "txt"):
         #     bboxes = []

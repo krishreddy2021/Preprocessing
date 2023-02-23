@@ -52,7 +52,7 @@ def modify_bound_coors(input):
     
 def iOU(localizer, ground_truth):
 
-     # Define the two arrays of bounding boxes (in the format [x1, y1, x2, y2])
+    # Define the two arrays of bounding boxes (in the format [x1, y1, x2, y2])
 
     image1 = torch.tensor(localizer)
     image2 = torch.tensor(ground_truth)
@@ -61,7 +61,7 @@ def iOU(localizer, ground_truth):
     iou_matrix = torchvision.ops.box_iou(image1, image2)
 
     # Print the result
-    #print(iou_matrix)
+    print(iou_matrix)
 
     return iou_matrix
 
@@ -71,9 +71,9 @@ if __name__ == "__main__":
     groundTruth = dict()
     localizer = dict()
 
-    # Test cases 
-    groundTruth["1"] = [[1,2,3,4], []]
-    groundTruth["2"] = [[2,2,4,5]]
+    # Test cases
+    groundTruth["1"] = [[1,2,3,4]]
+    groundTruth["2"] = [[0,0,0,0]]
     localizer["1"] = [[1,1,2,2],[2,1,5,4]]
     localizer["2"] = [[2,4,3,5]]
 

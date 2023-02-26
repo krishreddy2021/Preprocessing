@@ -99,19 +99,48 @@ def generateCSVFiles(dict,outputFolderPath):
                 x, y, w, h = box
                 writer.writerow([x, y, w, h, 1])
 
-def main():
-    bigfolderPath = "./Labeled_Files"
+def checkLabels(bigfolderPath_Imgs, bigfolderPath_XML):
+    ogImgFolders = os.listdir(bigfolderPath_Imgs)
 
-    folders = os.listdir(bigfolderPath)
+    for folder in ogImgFolders:
+        if folder != ".DS_Store" :
+
+            XML_files = os.listdir(bigfolderPath_XML + '/' + folder)
+            Img_files = os.listdir(bigfolderPath_Imgs + '/' + folder)
+
+            xmlSet = set()
+            imgSet = set()
+
+            for file in XML_files:
+                xmlSet.add(file.split('.')[0])
+
+            for file in Img_files:
+                imgSet.add(file.split('.')[0])
+
+            
+            intersection = xmlSet.intersection(imgSet)
+            diff = imgSet - xmlSet
+
+            print(f"{folder} -- Image Count: {len(Img_files)}   XML Count: {len(XML_files)}   Overlap: {len(intersection)}   Diff: {len(diff)}")
+            print()
+        
+
+def main():
+    bigfolderPath_XML = "./Labeled_Files"
+
+    folders = os.listdir(bigfolderPath_XML)
 
     box_dict = { }
     output_dict = { }
 
     for folder in folders:
-        folderPath = bigfolderPath + '/' + folder
+        folderPath = bigfolderPath_XML + '/' + folder
         output_dict = scrapeLabels(folderPath)
         box_dict  = {**box_dict, **output_dict}
-        
+
+    bigfolderPath_Imgs = "./Images_to_Label"
+    checkLabels(bigfolderPath_Imgs, bigfolderPath_XML)
+
     outputFolderPath = "./ground_truth_outputs_csv"
 
     generateCSVFiles(box_dict,outputFolderPath)
